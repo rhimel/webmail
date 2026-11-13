@@ -607,7 +607,7 @@ button.am-attach { border: 0; font: inherit; color: inherit; text-align: start; 
         <span class="am-spacer"></span>
         <span class="am-mono proto">Prototype · sample data</span>
         <button class="statusbtn" id="statusBtn" type="button" aria-label="System status"><span class="am-status am-mono" role="status" id="sync"><i data-icon="cloudOff" data-size="14"></i><span id="synctext">Offline · sample</span></span></button>
-        <button class="am-btn am-btn--icon hide-sm" id="themeBtn" type="button" aria-label="Switch to Daylight theme"><i data-icon="moon"></i></button>
+        <button class="am-btn am-btn--icon hide-sm" id="themeBtn" type="button" aria-label="Theme" hidden><i data-icon="moon"></i></button>
         <button class="am-btn am-btn--icon hide-sm" id="keysBtn" type="button" aria-label="Keyboard shortcuts"><i data-icon="key"></i></button>
         <button class="am-btn am-btn--icon" id="settingsBtn" type="button" aria-label="Settings"><i data-icon="settings"></i></button>
         <button class="am-btn am-btn--icon" id="lockBtn" type="button" aria-label="Lock mailbox"><i data-icon="lock"></i></button>
@@ -628,7 +628,7 @@ button.am-attach { border: 0; font: inherit; color: inherit; text-align: start; 
               </div>
             </div>
             <div class="listscroll am-fade-edges" id="listscroll">
-              <div class="am-list am-list--glide" role="listbox" aria-label="Messages" id="list"></div>
+              <div class="am-list am-list--glide" role="listbox" aria-label="Messages" id="list" tabindex="-1"></div>
             </div>
           </section>
           <section class="readpane" aria-label="Conversation" id="readpane"></section>
@@ -1100,7 +1100,7 @@ button.am-attach { border: 0; font: inherit; color: inherit; text-align: start; 
       '<div class="am-thread__head">' + (labels ? '<div style="display:flex;gap:var(--space-4);flex-wrap:wrap">' + labels + '</div>' : '') +
       '<h1 class="am-thread__subject"' + (m.rtl ? ' dir="rtl"' : '') + '>' + esc(m.subject) + '</h1>' +
       '<div class="am-manifest am-mono"><span>' + (m.earlier ? '2 messages' : '1 message') + '</span><span>' + m.date + '</span><span class="am-spacer"></span>' +
-      check(m.auth.tls, 'TLS 1.3') + check(m.auth.dkim, 'DKIM') + check(m.auth.spf, 'SPF') + check(true, 'DMARC') + '<span class="am-manifest__sample am-mono">sample data — not verified</span></div></div>' +
+      check(m.auth.tls, 'TLS 1.3') + check(m.auth.dkim, 'DKIM') + check(m.auth.spf, 'SPF') + check(m.auth.spf, 'DMARC') + '<span class="am-manifest__sample am-mono">sample data — not verified</span></div></div>' +
       brief + banner + earlier +
       '<div class="am-msg"><div class="am-msg__head"><span class="am-avatar' + (m.brand ? ' am-avatar--brand' : '') + '">' + m.ini + '</span>' +
       '<div style="min-width:0"><div class="am-msg__from"><span' + (m.rtl ? ' dir="rtl"' : '') + '>' + esc(m.from) + '</span> <span class="am-msg__addr">' + esc(m.addr) + '</span></div><div class="am-msg__to">to ' + esc(m.to) + '</div></div>' +
@@ -1255,7 +1255,6 @@ button.am-attach { border: 0; font: inherit; color: inherit; text-align: start; 
   }
   function openSettings() {
     openSheet('SETTINGS', '<dl class="kv am-mono" style="display:grid;grid-template-columns:auto 1fr;gap:8px 24px;margin:0">' +
-      '<dt>Theme</dt><dd><button class="am-btn am-btn--secondary am-btn--sm am-cut" type="button" id="setTheme">Toggle Midnight / Daylight</button></dd>' +
       '<dt>Motion</dt><dd>Follows your system reduced-motion setting</dd>' +
       '<dt>Storage</dt><dd>7.4 / 10 GB (sample)</dd>' +
       '<dt>Search, folders, labels</dt><dd>Working — local sample mailbox</dd>' +
@@ -1265,7 +1264,7 @@ button.am-attach { border: 0; font: inherit; color: inherit; text-align: start; 
       '<dt>Sync</dt><dd>Unavailable — offline artifact</dd>' +
       '<dt>Sign-in</dt><dd>Prototype lock — not real authentication</dd>' +
       '<dt>Attachment content</dt><dd>Placeholder download only</dd></dl>');
-    var t = $('#setTheme'); if (t) t.onclick = function () { $('#themeBtn').click(); };
+
   }
   function sendNow() {
     var to = $('#cTo').value.trim(), err = $('#cErr'), btn = $('#cSend');
@@ -1472,7 +1471,7 @@ button.am-attach { border: 0; font: inherit; color: inherit; text-align: start; 
 
   /* ---------------- Boot ---------------- */
   try { var t = localStorage.getItem('aalkc-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (_) {}
-  if (document.documentElement.getAttribute('data-theme') === 'light') $('#themeBtn').setAttribute('aria-label', 'Switch to Midnight theme');
+
   renderRail(true);
   renderList(true);
   renderReader();
